@@ -760,7 +760,8 @@
     "compile": "tsc -p .",
     "watch": "tsc -watch -p .",
     "test": "npm run compile && node --test \"out/test/**/*.test.js\"",
-    "package": "npx @vscode/vsce package"
+    "package": "npx @vscode/vsce package",
+    "vscode:prepublish": "npm run compile"
   },
   "devDependencies": {
     "@types/diff-match-patch": "^1.0.36",
