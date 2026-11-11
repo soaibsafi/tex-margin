@@ -1,0 +1,32 @@
+\documentclass{article}
+\usepackage{natbib}
+\title{Checking Configuration Files with Lightweight Models}
+\author{Alex Kim \and Sam Rivera}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Configuration files are a frequent source of outages. We show how lightweight models,
+written in Alloy~\cite{jackson2002alloy}, catch inconsistent configurations before deployment.
+\end{abstract}
+
+\section{Introduction}
+Misconfigurations cause a large share of production incidents. Lightweight formal models
+are cheap to write and can be checked automatically~\cite{Jackson02}. Recent work studies how
+people write such models~\cite{jovanovic2024rightwrongunderstanding}.
+
+\section{Approach}
+We derive an Alloy model from the configuration schema and check every file against it.
+
+\section{Evaluation}
+We evaluate on 40 configuration files from one open-source project.
+The checker found 12 inconsistencies, 9 of which were confirmed by the developers.
+
+\section{Related Work}
+Learned models of configurations build on neural sequence models~\cite{vaswani2017attention}.
+Retracted studies such as~\cite{wakefield1998} keep being cited, which motivates checking
+references automatically~\cite{jackson2002aloy}.
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+\end{document}

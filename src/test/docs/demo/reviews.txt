@@ -1,0 +1,18 @@
+----------------------- REVIEW 1 ---------------------
+SUBMISSION: 17
+TITLE: Checking Configuration Files with Lightweight Models
+
+The paper proposes checking configuration files against Alloy models derived from their
+schema. Overall a solid contribution.
+
+1. The evaluation uses only 40 configuration files from a single project. How do the
+   results generalize?
+2. Section 3 does not explain how the model is derived from the schema.
+3. Typo in the abstract: "lightwieght".
+
+----------------------- REVIEW 2 ---------------------
+The idea is interesting, but the related work misses recent learning-based approaches
+to configuration validation.
+
+- Please compare with at least one learning-based tool.
+- The threats to validity are not discussed.

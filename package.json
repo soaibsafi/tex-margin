@@ -1,0 +1,777 @@
+{
+  "name": "tex-margin",
+  "displayName": "TeX Margin",
+  "description": "Overleaf-style review comments for LaTeX, stored locally in your project and anchored so they survive edits. Plus BibTeX tidying and metadata updates from DBLP, Crossref and OpenAlex, with a diff preview.",
+  "icon": "media/tex-margin.png",
+  "version": "0.1.0",
+  "publisher": "Soaibuzzaman",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other",
+    "Formatters"
+  ],
+  "keywords": [
+    "latex",
+    "comments",
+    "review",
+    "overleaf",
+    "annotations",
+    "bibtex",
+    "bibtex-tidy",
+    "formatter",
+    "dblp",
+    "crossref",
+    "metadata"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:latex",
+    "onLanguage:tex",
+    "onLanguage:bibtex",
+    "workspaceContains:.texmargin/comments.json",
+    "workspaceContains:**/*.tex"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "texMargin",
+          "title": "TeX Margin",
+          "icon": "media/tex-margin.svg"
+        }
+      ]
+    },
+    "views": {
+      "texMargin": [
+        {
+          "id": "texMargin.comments",
+          "name": "Comments",
+          "icon": "media/tex-margin.svg"
+        },
+        {
+          "id": "texMargin.reviews",
+          "name": "Reviews",
+          "icon": "media/tex-margin.svg"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "texMargin.comments",
+        "contents": "No comments yet.\nSelect some text in a LaTeX file and press Ctrl+Alt+M (⌘⌥M on macOS), or right-click the selection and choose Add Comment.\n[Add Comment](command:texMargin.addComment)"
+      },
+      {
+        "view": "texMargin.reviews",
+        "contents": "Got reviews back? Copy them from the email or the submission system, then import them: they are split into comments you can attach to the paper, track, and answer in a generated response letter.\n[Import Reviews](command:texMargin.reviews.import)"
+      }
+    ],
+    "commands": [
+      {
+        "command": "texMargin.addComment",
+        "title": "Add Comment",
+        "category": "TeX Margin",
+        "icon": "$(comment)"
+      },
+      {
+        "command": "texMargin.addCommentEnablingCommenting",
+        "title": "Add Comment",
+        "category": "TeX Margin",
+        "icon": "$(comment)"
+      },
+      {
+        "command": "texMargin.reply",
+        "title": "Reply",
+        "category": "TeX Margin",
+        "icon": "$(reply)"
+      },
+      {
+        "command": "texMargin.edit",
+        "title": "Edit Comment",
+        "category": "TeX Margin",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "texMargin.resolve",
+        "title": "Resolve Comment",
+        "category": "TeX Margin",
+        "icon": "$(check)"
+      },
+      {
+        "command": "texMargin.reopen",
+        "title": "Reopen Comment",
+        "category": "TeX Margin",
+        "icon": "$(issue-reopened)"
+      },
+      {
+        "command": "texMargin.delete",
+        "title": "Delete Comment",
+        "category": "TeX Margin",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "texMargin.reattach",
+        "title": "Re-attach Comment to Selection",
+        "category": "TeX Margin",
+        "icon": "$(pin)"
+      },
+      {
+        "command": "texMargin.reveal",
+        "title": "Go to Comment",
+        "category": "TeX Margin"
+      },
+      {
+        "command": "texMargin.showResolved",
+        "title": "Show Resolved Comments",
+        "category": "TeX Margin",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "texMargin.hideResolved",
+        "title": "Hide Resolved Comments",
+        "category": "TeX Margin",
+        "icon": "$(eye-closed)"
+      },
+      {
+        "command": "texMargin.thread.create",
+        "title": "Add Comment",
+        "category": "TeX Margin"
+      },
+      {
+        "command": "texMargin.thread.reply",
+        "title": "Reply",
+        "category": "TeX Margin"
+      },
+      {
+        "command": "texMargin.comment.edit",
+        "title": "Edit",
+        "category": "TeX Margin",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "texMargin.comment.delete",
+        "title": "Delete Reply",
+        "category": "TeX Margin",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "texMargin.comment.save",
+        "title": "Save",
+        "category": "TeX Margin"
+      },
+      {
+        "command": "texMargin.comment.cancel",
+        "title": "Cancel",
+        "category": "TeX Margin"
+      },
+      {
+        "command": "texMargin.tidyBib",
+        "title": "Tidy BibTeX File…",
+        "category": "TeX Margin",
+        "icon": "$(checklist)"
+      },
+      {
+        "command": "texMargin.preview.apply",
+        "title": "Apply All Changes",
+        "category": "TeX Margin",
+        "icon": "$(check)"
+      },
+      {
+        "command": "texMargin.preview.review",
+        "title": "Review Changes One by One",
+        "category": "TeX Margin",
+        "icon": "$(git-compare)"
+      },
+      {
+        "command": "texMargin.preview.discard",
+        "title": "Discard Preview",
+        "category": "TeX Margin",
+        "icon": "$(close)"
+      },
+      {
+        "command": "texMargin.preview.keep",
+        "title": "Keep Remaining Changes",
+        "category": "TeX Margin",
+        "icon": "$(check)"
+      },
+      {
+        "command": "texMargin.preview.discardReview",
+        "title": "Discard All Changes",
+        "category": "TeX Margin",
+        "icon": "$(discard)"
+      },
+      {
+        "command": "texMargin.bibUpdate.entry",
+        "title": "Update Entry Metadata…",
+        "category": "TeX Margin",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "texMargin.bibUpdate.setApiKey",
+        "title": "Set Metadata API Key…",
+        "category": "TeX Margin"
+      },
+      {
+        "command": "texMargin.citations.check",
+        "title": "Check Citations",
+        "category": "TeX Margin"
+      },
+      {
+        "command": "texMargin.citations.removeUnused",
+        "title": "Remove Unused BibTeX Entries…",
+        "category": "TeX Margin"
+      },
+      {
+        "command": "texMargin.citations.mergeKeys",
+        "title": "Merge Citation Keys",
+        "category": "TeX Margin"
+      },
+      {
+        "command": "texMargin.citations.retractions",
+        "title": "Check Cited Papers for Retractions",
+        "category": "TeX Margin"
+      },
+      {
+        "command": "texMargin.citations.preprints",
+        "title": "Find Published Versions of Preprints…",
+        "category": "TeX Margin"
+      },
+      {
+        "command": "texMargin.reviews.import",
+        "title": "Import Reviews…",
+        "category": "TeX Margin",
+        "icon": "$(add)"
+      },
+      {
+        "command": "texMargin.reviews.openItem",
+        "title": "Open Review Comment",
+        "category": "TeX Margin"
+      },
+      {
+        "command": "texMargin.reviews.place",
+        "title": "Attach Review Comment to Selection",
+        "category": "TeX Margin",
+        "icon": "$(pin)"
+      },
+      {
+        "command": "texMargin.reviews.markDone",
+        "title": "Mark Review Comment as Addressed",
+        "category": "TeX Margin",
+        "icon": "$(check)"
+      },
+      {
+        "command": "texMargin.reviews.markOpen",
+        "title": "Reopen Review Comment",
+        "category": "TeX Margin",
+        "icon": "$(issue-reopened)"
+      },
+      {
+        "command": "texMargin.reviews.gotoPaper",
+        "title": "Go to Place in Paper",
+        "category": "TeX Margin",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "texMargin.reviews.showChanges",
+        "title": "Show Changes Since Submission",
+        "category": "TeX Margin",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "texMargin.reviews.letter",
+        "title": "Generate Response Letter",
+        "category": "TeX Margin",
+        "icon": "$(output)"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "texMargin.addComment",
+          "when": "editorHasSelection && commentingEnabled && editorLangId =~ /^(latex|tex|doctex|latex-expl3|bibtex)$/",
+          "group": "9_texMargin@1"
+        },
+        {
+          "command": "texMargin.addCommentEnablingCommenting",
+          "when": "editorHasSelection && !commentingEnabled && editorLangId =~ /^(latex|tex|doctex|latex-expl3|bibtex)$/",
+          "group": "9_texMargin@1"
+        },
+        {
+          "command": "texMargin.tidyBib",
+          "when": "editorLangId == bibtex && resourceScheme != texmargin-preview && !isInDiffEditor",
+          "group": "1_modification@90"
+        },
+        {
+          "command": "texMargin.bibUpdate.entry",
+          "when": "editorLangId == bibtex && resourceScheme != texmargin-preview && !isInDiffEditor",
+          "group": "1_modification@91"
+        },
+        {
+          "command": "texMargin.citations.preprints",
+          "when": "editorLangId == bibtex && resourceScheme != texmargin-preview && !isInDiffEditor",
+          "group": "1_modification@92"
+        },
+        {
+          "command": "texMargin.reviews.place",
+          "when": "editorHasSelection && resourceExtname == .tex",
+          "group": "9_texMargin@2"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "texMargin.showResolved",
+          "when": "view == texMargin.comments && !texMargin.showResolved",
+          "group": "navigation"
+        },
+        {
+          "command": "texMargin.hideResolved",
+          "when": "view == texMargin.comments && texMargin.showResolved",
+          "group": "navigation"
+        },
+        {
+          "command": "texMargin.reviews.import",
+          "when": "view == texMargin.reviews",
+          "group": "navigation@1"
+        },
+        {
+          "command": "texMargin.reviews.letter",
+          "when": "view == texMargin.reviews",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "texMargin.resolve",
+          "when": "view == texMargin.comments && viewItem == comment.open",
+          "group": "inline@1"
+        },
+        {
+          "command": "texMargin.reopen",
+          "when": "view == texMargin.comments && viewItem == comment.resolved",
+          "group": "inline@1"
+        },
+        {
+          "command": "texMargin.reattach",
+          "when": "view == texMargin.comments && viewItem == comment.orphaned",
+          "group": "inline@1"
+        },
+        {
+          "command": "texMargin.reply",
+          "when": "view == texMargin.comments && viewItem =~ /^comment\\./",
+          "group": "1_edit@1"
+        },
+        {
+          "command": "texMargin.edit",
+          "when": "view == texMargin.comments && viewItem =~ /^comment\\./",
+          "group": "1_edit@2"
+        },
+        {
+          "command": "texMargin.delete",
+          "when": "view == texMargin.comments && viewItem =~ /^comment\\./",
+          "group": "2_danger@1"
+        },
+        {
+          "command": "texMargin.reviews.place",
+          "when": "view == texMargin.reviews && viewItem =~ /^reviewItem..*.unplaced$/",
+          "group": "inline@1"
+        },
+        {
+          "command": "texMargin.reviews.gotoPaper",
+          "when": "view == texMargin.reviews && viewItem =~ /^reviewItem..*.placed$/",
+          "group": "inline@1"
+        },
+        {
+          "command": "texMargin.reviews.markDone",
+          "when": "view == texMargin.reviews && viewItem =~ /^reviewItem.open/",
+          "group": "inline@2"
+        },
+        {
+          "command": "texMargin.reviews.markOpen",
+          "when": "view == texMargin.reviews && viewItem =~ /^reviewItem.done/",
+          "group": "inline@2"
+        },
+        {
+          "command": "texMargin.reviews.place",
+          "when": "view == texMargin.reviews && viewItem =~ /^reviewItem..*.placed$/",
+          "group": "1_edit@1"
+        },
+        {
+          "command": "texMargin.reviews.showChanges",
+          "when": "view == texMargin.reviews && viewItem =~ /^reviewItem..*.placed$/",
+          "group": "1_edit@2"
+        },
+        {
+          "command": "texMargin.reviews.letter",
+          "when": "view == texMargin.reviews && viewItem == reviewFile",
+          "group": "1_edit@1"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "texMargin.addComment",
+          "when": "commentingEnabled"
+        },
+        {
+          "command": "texMargin.addCommentEnablingCommenting",
+          "when": "!commentingEnabled"
+        },
+        {
+          "command": "texMargin.reveal",
+          "when": "false"
+        },
+        {
+          "command": "texMargin.showResolved",
+          "when": "false"
+        },
+        {
+          "command": "texMargin.hideResolved",
+          "when": "false"
+        },
+        {
+          "command": "texMargin.thread.create",
+          "when": "false"
+        },
+        {
+          "command": "texMargin.thread.reply",
+          "when": "false"
+        },
+        {
+          "command": "texMargin.comment.edit",
+          "when": "false"
+        },
+        {
+          "command": "texMargin.comment.delete",
+          "when": "false"
+        },
+        {
+          "command": "texMargin.comment.save",
+          "when": "false"
+        },
+        {
+          "command": "texMargin.comment.cancel",
+          "when": "false"
+        },
+        {
+          "command": "texMargin.tidyBib",
+          "when": "editorLangId == bibtex && resourceScheme != texmargin-preview"
+        },
+        {
+          "command": "texMargin.preview.apply",
+          "when": "texMargin.preview == preview"
+        },
+        {
+          "command": "texMargin.preview.review",
+          "when": "texMargin.preview == preview"
+        },
+        {
+          "command": "texMargin.preview.discard",
+          "when": "texMargin.preview == preview"
+        },
+        {
+          "command": "texMargin.preview.keep",
+          "when": "texMargin.preview == review"
+        },
+        {
+          "command": "texMargin.preview.discardReview",
+          "when": "texMargin.preview == review"
+        },
+        {
+          "command": "texMargin.bibUpdate.entry",
+          "when": "editorLangId == bibtex && resourceScheme != texmargin-preview"
+        },
+        {
+          "command": "texMargin.citations.mergeKeys",
+          "when": "false"
+        },
+        {
+          "command": "texMargin.reviews.openItem",
+          "when": "false"
+        }
+      ],
+      "comments/commentThread/context": [
+        {
+          "command": "texMargin.thread.create",
+          "group": "inline",
+          "when": "commentController == texMargin && commentThreadIsEmpty"
+        },
+        {
+          "command": "texMargin.thread.reply",
+          "group": "inline",
+          "when": "commentController == texMargin && !commentThreadIsEmpty"
+        }
+      ],
+      "comments/commentThread/title": [
+        {
+          "command": "texMargin.resolve",
+          "group": "navigation@1",
+          "when": "commentController == texMargin && commentThread == open"
+        },
+        {
+          "command": "texMargin.reopen",
+          "group": "navigation@1",
+          "when": "commentController == texMargin && commentThread == resolved"
+        },
+        {
+          "command": "texMargin.delete",
+          "group": "navigation@2",
+          "when": "commentController == texMargin && commentThread =~ /^(open|resolved)$/"
+        }
+      ],
+      "comments/comment/title": [
+        {
+          "command": "texMargin.comment.edit",
+          "group": "inline@1",
+          "when": "commentController == texMargin && comment =~ /^(root|reply)$/"
+        },
+        {
+          "command": "texMargin.comment.delete",
+          "group": "inline@2",
+          "when": "commentController == texMargin && comment == reply"
+        }
+      ],
+      "comments/comment/context": [
+        {
+          "command": "texMargin.comment.cancel",
+          "group": "inline@1",
+          "when": "commentController == texMargin"
+        },
+        {
+          "command": "texMargin.comment.save",
+          "group": "inline@2",
+          "when": "commentController == texMargin"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "texMargin.tidyBib",
+          "when": "editorLangId == bibtex && resourceScheme != texmargin-preview && !isInDiffEditor",
+          "group": "navigation@90"
+        },
+        {
+          "command": "texMargin.preview.apply",
+          "when": "texMargin.preview == preview && resourceScheme == texmargin-preview",
+          "group": "navigation@1"
+        },
+        {
+          "command": "texMargin.preview.review",
+          "when": "texMargin.preview == preview && resourceScheme == texmargin-preview",
+          "group": "navigation@2"
+        },
+        {
+          "command": "texMargin.preview.discard",
+          "when": "texMargin.preview == preview && resourceScheme == texmargin-preview",
+          "group": "navigation@3"
+        },
+        {
+          "command": "texMargin.preview.keep",
+          "when": "texMargin.preview == review && isInDiffEditor",
+          "group": "navigation@1"
+        },
+        {
+          "command": "texMargin.preview.discardReview",
+          "when": "texMargin.preview == review && isInDiffEditor",
+          "group": "navigation@2"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "texMargin.tidyBib",
+          "when": "resourceExtname == .bib",
+          "group": "7_modification@90"
+        },
+        {
+          "command": "texMargin.citations.preprints",
+          "when": "resourceExtname == .bib",
+          "group": "7_modification@91"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "texMargin.addComment",
+        "key": "ctrl+alt+m",
+        "mac": "cmd+alt+m",
+        "when": "editorTextFocus && editorHasSelection && commentingEnabled"
+      },
+      {
+        "command": "texMargin.addCommentEnablingCommenting",
+        "key": "ctrl+alt+m",
+        "mac": "cmd+alt+m",
+        "when": "editorTextFocus && editorHasSelection && !commentingEnabled"
+      }
+    ],
+    "configuration": {
+      "title": "TeX Margin",
+      "properties": {
+        "texMargin.author": {
+          "type": "string",
+          "default": "",
+          "description": "Name shown on your comments. Empty = git user.name, falling back to your OS user name."
+        },
+        "texMargin.languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "latex",
+            "tex",
+            "doctex",
+            "latex-expl3",
+            "bibtex"
+          ],
+          "description": "Language ids where the inline comment UI (gutter + and comment threads) is enabled."
+        },
+        "texMargin.bibtexTidy.options": {
+          "type": "object",
+          "default": {},
+          "markdownDescription": "Options passed to [bibtex-tidy](https://github.com/FlamingTempura/bibtex-tidy), by their camelCase names, e.g. `{ \"sort\": true, \"merge\": \"combine\", \"omit\": [\"abstract\", \"file\"], \"curly\": true }`. Every option of the [bibtex-tidy CLI](https://flamingtempura.github.io/bibtex-tidy/) works (`--sort-fields` → `sortFields`). Used by **Format Document** and as the defaults of **Tidy BibTeX File…**. Indentation follows the editor unless `space` or `tab` is set."
+        },
+        "texMargin.bibtexTidy.chooseEachTime": {
+          "type": "boolean",
+          "default": true,
+          "description": "Tidy BibTeX File…: pick which steps to run (sort, merge duplicates, …) each time. Off = always use texMargin.bibtexTidy.options."
+        },
+        "texMargin.bibtexTidy.formatter": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Provide **Format Document** for BibTeX files using bibtex-tidy. Turn off if another extension (e.g. LaTeX Workshop) should format `.bib` files."
+        },
+        "texMargin.bibUpdate.sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "arxiv",
+              "dblp",
+              "crossref",
+              "openalex"
+            ],
+            "enumDescriptions": [
+              "arXiv: for arXiv preprints, the published DOI the authors added to their arXiv record (exact). No key.",
+              "DBLP: computer science. No key.",
+              "Crossref: all disciplines, by DOI. No key; set an email for faster access.",
+              "OpenAlex: all disciplines. Works without a key, but a free API key is strongly recommended."
+            ]
+          },
+          "uniqueItems": true,
+          "default": [
+            "arxiv",
+            "dblp",
+            "crossref",
+            "openalex"
+          ],
+          "markdownDescription": "**Update Entry Metadata**: the sources to search, in order. The first confident match is used. Optional API keys (OpenAlex, Crossref Plus) are kept in VS Code’s secret storage: [Set Metadata API Key…](command:texMargin.bibUpdate.setApiKey)."
+        },
+        "texMargin.bibUpdate.email": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Your email for **Crossref**’s faster “polite” pool (sent as `mailto` with Crossref requests only). Leave empty to stay anonymous; Crossref then allows about one request per second."
+        },
+        "texMargin.bibUpdate.keepFields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "Fields an update never changes or removes, e.g. `[\"title\"]` if you protect capitalization by hand. Use `type` to keep the entry type."
+        },
+        "texMargin.bibUpdate.skipFields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "timestamp",
+            "biburl",
+            "bibsource",
+            "editor",
+            "collection"
+          ],
+          "markdownDescription": "Fields never taken from a source (your own values are kept). Defaults: dblp's bookkeeping (`timestamp`, `biburl`, `bibsource`), proceedings `editor`s, and Crossref's non-standard `collection`. Remove a field here to take it. The update message lists what was not taken."
+        },
+        "texMargin.bibUpdate.skipDoiUrl": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Do not take a `url` that only repeats the DOI link (`https://doi.org/…`) when the entry gets a `doi` field. Most styles already link the DOI, so the link would print twice."
+        },
+        "texMargin.citations.enabled": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Check citations in the Problems panel as you write: `cite` keys without a BibTeX entry, entries never cited, keys defined twice, and the same paper under two keys."
+        },
+        "texMargin.citations.reportUnused": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Report BibTeX entries that are never cited. Turn off if you keep one large shared bibliography."
+        }
+      }
+    },
+    "colors": [
+      {
+        "id": "texMargin.commentBackground",
+        "description": "Background of commented text.",
+        "defaults": {
+          "dark": "#e2b93d2e",
+          "light": "#f5d76e66",
+          "highContrast": "#e2b93d40",
+          "highContrastLight": "#f5d76e66"
+        }
+      },
+      {
+        "id": "texMargin.commentBorder",
+        "description": "Underline and overview-ruler color of commented text.",
+        "defaults": {
+          "dark": "#e2b93daa",
+          "light": "#c99a06",
+          "highContrast": "#e2b93d",
+          "highContrastLight": "#c99a06"
+        }
+      }
+    ],
+    "languages": [
+      {
+        "id": "bibtex",
+        "aliases": [
+          "BibTeX",
+          "bibtex"
+        ],
+        "extensions": [
+          ".bib"
+        ]
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soaibsafi/tex-margin.git"
+  },
+  "author": {
+    "email": "mail@soaib.me",
+    "name": "Soaibuzzaman"
+  },
+  "bugs": {
+    "url": "https://github.com/soaibsafi/tex-margin/issues"
+  },
+  "homepage": "https://github.com/soaibsafi/tex-margin/#readme",
+  "scripts": {
+    "compile": "tsc -p .",
+    "watch": "tsc -watch -p .",
+    "test": "npm run compile && node --test \"out/test/**/*.test.js\"",
+    "package": "npx @vscode/vsce package"
+  },
+  "devDependencies": {
+    "@types/diff-match-patch": "^1.0.36",
+    "@types/node": "^20.11.0",
+    "@types/vscode": "~1.90.0",
+    "@vscode/test-electron": "^3.1.0",
+    "playwright-core": "^1.65.0",
+    "typescript": "^5.6.0"
+  },
+  "dependencies": {
+    "bibtex-tidy": "^1.15.1",
+    "diff-match-patch": "^1.0.5"
+  }
+}
