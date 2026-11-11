@@ -3,7 +3,7 @@
   "displayName": "TeX Margin",
   "description": "Overleaf-style review comments for LaTeX, stored locally in your project and anchored so they survive edits. Plus BibTeX tidying and metadata updates from DBLP, Crossref and OpenAlex, with a diff preview.",
   "icon": "media/tex-margin.png",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "Soaibuzzaman",
   "license": "MIT",
   "engines": {
