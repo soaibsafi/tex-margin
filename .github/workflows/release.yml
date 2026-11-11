@@ -17,7 +17,4 @@ jobs:
           node-version: 22
       - run: npm ci
       - run: npx @vscode/vsce@latest publish --oidc
-      - name: Publish to Open VSX Registry
-        uses: HaaLeo/publish-vscode-extension@v2
-        with:
-          pat: ${{ secrets.OPEN_VSX_TOKEN }}
+      - run: npx ovsx publish --trusted-publishing
