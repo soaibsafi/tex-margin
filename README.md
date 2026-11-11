@@ -5,14 +5,14 @@ Overleaf-style review comments and research companion for LaTeX in VS Code. TeX 
 
 ![A LaTeX paper with a comment thread and the TeX Margin sidebar](images/comments-overview.png)
 
-> [Note]
+> [!Note]
 > I've been writing LaTeX in VS Code for quite a while now. There are plenty of great tools and extensions out there and I am using them too. Howver, some issues I couldn't resolve easily. I wanted something lightweight that could act as a review companion right on the margin of my editor. Nothing I found quite hit the mark or felt as smooth as I wanted. 
 
-> [IMPORTANT]
+> [!IMPORTANT]
 > I built this mostly for my own research workflow (mostly DBLP and CrossRef). Therefore, I didn't make the effort to adding PubMed, CORE, or others. If you'd love to see another source supported, PRs are very welcome!
 
 
-> [WARNING]
+> [!WARNING]
 > Parts of the implementation and documentation were generated with AI and I haven't reviewed or validated, so there may be bugs. Between research and writing, I mostly fix issues as I encuonter them. If you run into anything unusual, please open an issue!
 
 ## Features
